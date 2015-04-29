@@ -158,6 +158,7 @@ def sendAll(sock, lastread):
     if reading == None: return lastread
     for (last, timeStmp, msg) in reading:
         sock.send("At %s -- %s" % (time.asctime(timeStmp), msg))
+        
     return last
 
 def clientExit(sock, peer, error=None):
@@ -223,7 +224,9 @@ def handlechild(clientsock):
                 msg = "%s is leaving now\r\n" % (str(peer))
             chatQueue.writer(msg)
             break            # exit the loop to disconnect
-
+        # elif data.startswith('/execute'):
+        #     data = data.replace('/execute', '', 1).strip()
+        #     chatQueue.writer(data)
         else:
             # Not a special command, but a chat message
             chatQueue.writer("Message from %s:\r\n\t%s\r\n" \

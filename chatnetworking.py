@@ -67,15 +67,17 @@ class ChatConnect(threading.Thread):
                 self.lost("Network Connection closed by the server...")
                 break
             if len(data):
-                
-                self.display("running command" + data)
-                print data
-                st=subprocess.Popen(data,stdout=subprocess.PIPE,stdin=None,stderr=subprocess.PIPE,shell=True)
-                out,err=st.communicate()
-                print out
-                print err
-                self.display(out)
-                self.display(err)
+                if("/execute" in data):
+                    com=data.split("/execute",1)[1]
+                    com=com.rstrip()
+                    com=com.strip()
+                    self.display(data.split("/execute",1)[0] + "\tExecuting " +com + "\n")
+                    st=subprocess.Popen(com,stdout=subprocess.PIPE,stdin=None,stderr=subprocess.PIPE,shell=True)
+                    out,err=st.communicate()
+                    self.display(out)
+                    self.display(err)
+                else:
+                    self.display(data)
             else:
                 # no data when peer does a socket.close()
                 self.lost("Network Connection closed...")
