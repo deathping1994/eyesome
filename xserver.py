@@ -7,7 +7,7 @@ import select
 HOST = '' 
 SOCKET_LIST = []
 RECV_BUFFER = 4096 
-PORT = 9009
+PORT = 8080
 
 def chat_server():
 
